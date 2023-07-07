@@ -1,4 +1,5 @@
 import random
+import re
 from constants import DIFFICULTY_LEVELS, WORDS_LENGTH
 
 def show_difficulty_menu():
@@ -34,7 +35,6 @@ def get_random_word(difficulty_settings):
     random_index = random.randint(0,max_index)
     selected_word = words[random_index]
 
-    print(selected_word)
     return selected_word
 
 
@@ -50,4 +50,39 @@ def get_total_tries(selected_word, difficulty_settings):
 
     total_tries = round(total_tries)
     return(total_tries)
+
+def play_hangman(selected_word,difficulty_settings):
+    """FUNCIONAMENTO DO JOGO"""
+    total_tries = available_tries = get_total_tries(selected_word, difficulty_settings)
+    current_state = ["_" for letter in selected_word]
+    guessed_letters = []
+
+    while "_" in current_state and available_tries:
+        print(f"\n\n##tentativa numero {total_tries - available_tries + 1} de {total_tries} ##")
+        for char in current_state:
+            print(char, end=" ")
+
+        guess = ""
+        while not guess:
+            guess = input("\nTente uma letra:").lower()
+            if len(guess) != 1 or not re.match("[a-z]",guess):
+                print("Invalido. tente novamente utilizando 1 letra.")
+                guess = ""
+
+        if guess not in guessed_letters:
+            guessed_letters.append(guess)
+
+            if guess in selected_word:
+                positions = [m.start() for m in re.finditer(guess, selected_word)]
+
+                for index in positions:
+                    current_state[index] = guess
+
+            else:
+                    available_tries -= 1
+        else:
+            print(f"{guess} já foi usada.")
+
+    return available_tries
+
 
