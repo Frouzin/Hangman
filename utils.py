@@ -40,10 +40,14 @@ def get_random_word(difficulty_settings):
 
 def get_total_tries(selected_word, difficulty_settings):
     """EXIBE O TOTAL DE TENTATIVAS PARA RESOLVER O PROBLEMA"""
-    total_tries = 2* len(selected_word)
+    unique_letters = set(selected_word)
+    total_tries = 1.5* len(unique_letters)
     if difficulty_settings == "1":
         total_tries += 2
     elif difficulty_settings == "3":
         total_tries -= 2
+        total_tries = min([total_tries, 18])
+        
+    total_tries = round(total_tries)
 
     print(f"A quantidade de chance para advinhar a palavra é: {total_tries}")
