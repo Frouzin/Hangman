@@ -33,7 +33,7 @@ with open("static\words.txt", mode="r") as f_words:
         w = word.strip()
         min,max = words_length[difficulty_settings]
 
-        if min < len(w) < max:
+        if min <= len(w) <= max:
             words.append(w)
 
 max_index = len(words)-1
@@ -41,3 +41,11 @@ random_index = random.randint(0,max_index)
 selected_word = words[random_index]
 
 print(selected_word)
+
+total_tries = 2* len(selected_word)
+if difficulty_settings == "1":
+    total_tries += 2
+elif difficulty_settings == "3":
+    total_tries -= 2
+
+print(f"A quantidade de chance para advinhar a palavra é: {total_tries}")
