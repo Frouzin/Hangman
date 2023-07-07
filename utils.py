@@ -47,7 +47,7 @@ def get_total_tries(selected_word, difficulty_settings):
     elif difficulty_settings == "3":
         total_tries -= 2
         total_tries = min([total_tries, 18])
-        
-    total_tries = round(total_tries)
 
-    print(f"A quantidade de chance para advinhar a palavra é: {total_tries}")
+    total_tries = round(total_tries)
+    return(total_tries)
+
